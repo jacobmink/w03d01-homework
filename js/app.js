@@ -17,11 +17,19 @@ const game = {
     gameActive: true
 }
 
-const morph = ()=>{
-    $('#character').html("<img src='unicornegg.gif'>");
-    setTimeout(()=>{
-        $('#character').html("<img src='unicornpoop.gif'>")
-    }, 2000);
+const morph = (num)=>{
+    if (num === 1){
+        $('#character').html("<img src='unicornegg.gif'>");
+        setTimeout(()=>{
+            $('#character').html("<img src='unicornpoop.gif'>")
+        }, 2000);
+    }else if (num === 2){
+        $('#character').html("<img src='unicornegg.gif'>");
+        setTimeout(()=>{
+            $('#character').html("<img src='rainbowpoop.gif'>")
+        }, 2000);
+    }
+    
     // $('#character').html("<img src='unicornpoop.gif'>")
 }
 
@@ -63,8 +71,11 @@ const timePasses = ()=>{
     game.time++;
     checkForDeath();
 
-    if (myPet.age === 5){
-        morph();
+    if (myPet.age % 2 === 0){
+        morph(1);
+    }
+    if (myPet.age % 4 === 0){
+        morph(2);
     }
     if (game.time % 5 === 0){
         hungerIncrease();
@@ -108,6 +119,7 @@ const play = ()=>{
 let timePassing;
 
 const createBoard = (e)=>{
+    
     $(e.target).hide();
     timePassing = setInterval(timePasses,1000);
     const $buttonBar = $('#buttons');
@@ -120,6 +132,7 @@ const createBoard = (e)=>{
 }
 
 const startGame = ()=>{
+    $('#character').html("<img src='glitterpoop.gif'>");
     $('#buttons').empty();
     $('.stats').empty();
     const $startButton = $('<button/>').text('Start Game!').click(createBoard);
