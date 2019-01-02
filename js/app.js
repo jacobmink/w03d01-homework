@@ -13,18 +13,18 @@ class Pet {
 const myPet = new Pet(10,1,0,0,0);
 
 const game = {
-    time: 0
-}
-
-const hungerIncrease = ()=>{
-    myPet.hunger++;
-    $('.hunger').text(`${myPet.hunger}`);
+    time: 0,
+    gameActive: true
 }
 
 const morph = ()=>{
     $('#character').html("<img src='gremlin.jpg'>")
 }
 
+const hungerIncrease = ()=>{
+    myPet.hunger++;
+    $('.hunger').text(`${myPet.hunger}`);
+}
 const boredomIncrease = ()=>{
     myPet.boredom++;
     $('.boredom').text(`${myPet.boredom}`)
@@ -40,7 +40,6 @@ const sleepinessIncrease = ()=>{
 
 const timePasses = ()=>{
     game.time++;
-    console.log(game.time)
 
     if (myPet.age === 5){
         morph();
@@ -63,17 +62,15 @@ const timePassing = setInterval(timePasses,1000);
 
 const feed = ()=>{
     myPet.hunger -= 1;
-    console.log(myPet.hunger);
+    $('.hunger').text(`${myPet.hunger}`);
 }
-
 const sleep = ()=>{
     myPet.sleepiness -= 1;
-    console.log(myPet.sleepiness)
+    $('.sleepiness').text(`${myPet.sleepiness}`);
 }
-
 const play = ()=>{
     myPet.boredom -= 1;
-    console.log(myPet.boredom)
+    $('.boredom').text(`${myPet.boredom}`);
 }
 
 const createBoard = ()=>{
@@ -84,7 +81,6 @@ const createBoard = ()=>{
     const $playButton = $('<button/>').addClass('player').text('Play with me').click(play);
     $buttonBar.append($feedButton,$playButton,$sleepButton);
     $('body').append($buttonBar,$statsBar);
-    timePasses();
 }
 
 createBoard();
