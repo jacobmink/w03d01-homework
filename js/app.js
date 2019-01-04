@@ -12,15 +12,15 @@ class Pet {
 const myPet = new Pet(10,1,0,0,0);
 
 const game = {
-    time: 0,
-    gameActive: true
+    time: 0
 }
 
 const moveBackAndForth = (image)=>{
     image.velocity({
-        translateX: 500}, {
+        translateX: 500,
+        scale: .5}, {
         easing: 'swing',
-        duration: 2000,
+        duration: 3000,
         loop:200});
     return image;
 }
@@ -66,18 +66,24 @@ const sleepinessIncrease = ()=>{
     $('#sleep-bar').attr('style',`width: ${myPet.sleepiness*10}%`)
 }
 const resetStats = ()=>{
+    $('h3').remove();
+    $('#character').empty();
+    $('#buttons').empty();
+    $('.stats').empty();
+    game.time = 0;
     myPet.boredom = 0;
     myPet.hunger = 0;
     myPet.sleepiness = 0;
     myPet.age = 1;
-    $('.progress-bar').attr('style','width: 0');
+    $('.progress-bar').attr('style','width: 1');
+    const $startButton = $('<button/>').addClass('btn').text('Start Game!').click(nameInput);
+    $('#buttons').append($startButton);
 }
+
 const gameOver = ()=>{
-    game.gameActive = false;
+    clearInterval(timePassing);
     $('#deathModal').modal();
     resetStats();
-    clearInterval(timePassing);
-    tryAgain();
 }
 const checkForDeath = ()=>{
     if (myPet.hunger === 10 || myPet.sleepiness === 10 || myPet.boredom === 10){
@@ -86,8 +92,6 @@ const checkForDeath = ()=>{
 }
 const timePasses = ()=>{
     game.time++;
-    checkForDeath();
-
     if (game.time === 20){
         morph(1);
     }
@@ -106,6 +110,7 @@ const timePasses = ()=>{
     if (game.time % 10 === 0){
         sleepinessIncrease();
     }
+    checkForDeath();
 }
 const feed = ()=>{
     myPet.hunger -= 1;
@@ -141,31 +146,29 @@ let timePassing;
 const createBoard = (e)=>{
     $('#buttons').empty();
     $('#character').html(moveBackAndForth($glitterpoop));
-    $(e.target).hide();
-    $('#nameModal').modal();
     timePassing = setInterval(timePasses,1000);
-    const $buttonBar = $('#buttons');
-    const $statsBar = $('.stats');
-    $statsBar.append(`Age: <span class='age'>${myPet.age}</span> <br> Hunger: <span class='hunger'>${myPet.hunger}</span> <br> Boredom: <span class='boredom'>${myPet.boredom}</span> <br> Sleepiness: <span class='sleepiness'>${myPet.sleepiness}</span>`);
+    $('.stats').append(`Age: <span class='age'>${myPet.age}</span> <br> Hunger: <span class='hunger'>${myPet.hunger}</span> <br> Boredom: <span class='boredom'>${myPet.boredom}</span> <br> Sleepiness: <span class='sleepiness'>${myPet.sleepiness}</span>`);
     const $feedButton = $('<button/>').addClass('feeder btn').text('Feed Me').click(feed);
     const $sleepButton = $('<button/>').addClass('sleeper btn').text('Put me to sleep').click(sleep);
     const $playButton = $('<button/>').addClass('player btn').text('Play with me').click(play);
-    $buttonBar.append($feedButton,$playButton,$sleepButton);
+    $('#buttons').append($feedButton,$playButton,$sleepButton);
 }
 
-const tryAgain = ()=>{
-    $('#character').empty();
-    $('#buttons').empty();
-    $('.stats').empty();
-    const $startButton = $('<button/>').addClass('btn').text('Start Game!').click(createBoard);
-    $('#buttons').append($startButton);
+let username;
+const nameInput = (e)=>{
+    $(e.target).hide();
+    $('#nameModal').modal();
 }
-
-$('#start-game').click(createBoard)
-
-const $nameEntered = $('input').val();
-
-$('.name-modal').click(()=>{
-    $('.titlespace').append($nameEntered);
+const putNameUp = (input)=>{
     
-})
+    $('.movespace').prepend(`<h3>Hi ${input}! Good luck!</h3>`);
+}
+$('#nameModal').on('click', 'button', function() {
+    username = $('.name-spot').val();
+    putNameUp(username);
+    $('.name-spot').val('');
+    createBoard();
+
+});
+
+$('#start-game').click(nameInput);

@@ -28,7 +28,8 @@
         <div class='row gamespace'>
         <!-- Stats Bar -->
             <div class='col-3 stats h3 pt-5 pl-4 text-white'></div>
-            <div class='col position-relative'>
+        <!-- Moving around space -->
+            <div class='col position-relative movespace'>
                 <div class='w-50 position-absolute' id="character"></div>
             </div>
         </div>
@@ -75,7 +76,7 @@
             <h5 class="modal-title" id="exampleModalLabel">Enter your name</h5>
         </div>
         <div class="modal-body">
-            <input type="text" placeholder='Name goes here'>
+            <input class='name-spot' type="text" placeholder='Name goes here'>
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-primary name-modal" data-dismiss="modal">Let's play!</button>
