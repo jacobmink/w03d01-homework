@@ -1,4 +1,48 @@
-img{
-    height: 300px;
+.poop{
+    height: 100px;
+    width: 100px;
+}
+
+#title{
+    height: 100%;
     width: 300px;
+    /* max-height: 100%;
+    max-width: 100%; */
+    margin: 0 auto;
+}
+
+body{
+    height: 100vh;
+    background: url("../fantasybg2.jpg") no-repeat center center fixed;
+    background-size: cover;
+}
+
+button{
+    margin: 3px 3px;
+}
+
+.progress{
+    background-color: transparent;
+    margin: 3px;
+}
+
+.button-bar{
+    height: 10%;
+    vertical-align: bottom;
+}
+
+.gamespace{
+    height: 50%;
+    vertical-align: top;
+}
+
+.titlespace{
+    height: 10%;
+    vertical-align: top;
+}
+
+#character{
+    margin-top: 50px;
+    vertical-align: bottom;
+    bottom: 0;
 }
